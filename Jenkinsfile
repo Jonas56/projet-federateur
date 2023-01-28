@@ -9,7 +9,9 @@ pipeline {
                 steps {
                     sh 'ls'
                     sh 'cd ./spark-streaming-app && mvn clean package'
-                    sh 'cd ../kafka-mqtt-connect && mvn clean package'
+                    sh 'ls'
+                    sh 'cd ./kafka-mqtt-connect && mvn clean package'
+            
                 }
             }
             stage('deploy') {
