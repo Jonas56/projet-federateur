@@ -77,8 +77,7 @@ services:
     image: eclipse-mosquitto
     container_name: mosquitto
     volumes:
-      - ./kafka-mqtt-connect/config/:/mosquitto/config/
-      - ./kafka-mqtt-connect/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./kafka-mqtt-connect/config:/mosquitto/config
       - ./kafka-mqtt-connect/log/:/mosquitto/log/
       - data:/mosquitto/data/
     ports:
