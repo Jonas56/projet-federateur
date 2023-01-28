@@ -6,8 +6,8 @@ services:
       - "9090:8080"
       - "7077:7077"
     volumes:
-       - ./apps:/opt/spark-apps
-       - ./data:/opt/spark-data
+      - ./docker-spark-cluster-master/apps:/opt/spark-apps
+      - ./docker-spark-cluster-master/data:/opt/spark-data
     environment:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
@@ -27,8 +27,8 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-a
     volumes:
-       - ./apps:/opt/spark-apps
-       - ./data:/opt/spark-data
+      - ./docker-spark-cluster-master/apps:/opt/spark-apps
+      - ./docker-spark-cluster-master/data:/opt/spark-data
   spark-worker-b:
     image: cluster-apache-spark:3.0.2
     ports:
@@ -45,8 +45,8 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-b
     volumes:
-        - ./apps:/opt/spark-apps
-        - ./data:/opt/spark-data
+      - ./docker-spark-cluster-master/apps:/opt/spark-apps
+      - ./docker-spark-cluster-master/data:/opt/spark-data
 
   zookeeper:
     image: zookeeper
@@ -57,8 +57,8 @@ services:
     env_file:
       - env.list
     volumes:
-      - ./zookeeper/data:/data
-      - ./zookeeper/datalog:/datalog
+      - ./kafka-mqtt-connect/zookeeper/data:/data
+      - ./kafka-mqtt-connect/zookeeper/datalog:/datalog
   kafka:
     image: bitnami/kafka
     ports:
@@ -72,11 +72,11 @@ services:
   mosquitto:
     image: eclipse-mosquitto
     volumes:
-      - ./config/:/mosquitto/config/:ro
-      - ./log/:/mosquitto/log/
+      - ./kafka-mqtt-connect/config/:/mosquitto/config/:ro
+      - ./kafka-mqtt-connect/log/:/mosquitto/log/
       - data:/mosquitto/data/
     ports:
-      - "1883:1883" 
+      - "1883:1883"
 
 volumes:
   data: ~
