@@ -43,7 +43,7 @@ rm ./jars/guava-14.0.1.jar && rm ./jars/protobuf-java-2.5.0.jar
 
 
 COPY start-spark.sh /
-COPY jars/* ./jars
+COPY jars/* ./jars/
 
 
 CMD ["/bin/bash", "/start-spark.sh"]
