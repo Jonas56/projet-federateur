@@ -38,8 +38,12 @@ RUN mkdir -p $SPARK_LOG_DIR && \
 touch $SPARK_MASTER_LOG && \
 touch $SPARK_WORKER_LOG && \
 ln -sf /dev/stdout $SPARK_MASTER_LOG && \
-ln -sf /dev/stdout $SPARK_WORKER_LOG
+ln -sf /dev/stdout $SPARK_WORKER_LOG && \
+rm ./jars/guava-14.0.1.jar && rm ./jars/protobuf-java-2.5.0.jar && \
+
 
 COPY start-spark.sh /
+COPY jars/* ./jars
+
 
 CMD ["/bin/bash", "/start-spark.sh"]
