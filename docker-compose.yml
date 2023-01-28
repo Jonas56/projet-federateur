@@ -64,6 +64,7 @@ services:
       - ./kafka-mqtt-connect/zookeeper/datalog:/datalog
   kafka:
     image: bitnami/kafka
+    container_name: kafka
     ports:
       - "9095:9092"
     env_file:
@@ -74,6 +75,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
   mosquitto:
     image: eclipse-mosquitto
+    container_name: mosquitto
     volumes:
       - ./kafka-mqtt-connect/config/:/mosquitto/config/:ro
       - ./kafka-mqtt-connect/log/:/mosquitto/log/
