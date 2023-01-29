@@ -56,11 +56,11 @@ public class DataValidationService {
         data.put("DateTime", formatter.format(date));
         note.setData(data);
         try {
-            //TODO To be checked with ilyas
+            //TODO To be tested
             if(this.todaysNotifs.containsKey(new Trio(nodeID, productId, sensor)) && this.sameDay(this.todaysNotifs.get(new Trio(nodeID, productId, sensor)), date)){
                 System.out.println("This notification was pushed today: key = "+ new Trio(nodeID, productId, sensor) + ", Value = "+date);
             } else {
-                System.out.println("response : " + StorageService.sendNotification(note, "demo"));
+                System.out.println("response : " + StorageService.sendNotification(note, productId));
                 this.todaysNotifs.put(new Trio(nodeID, productId, sensor), date);
             }
         } catch (FirebaseMessagingException e) {
