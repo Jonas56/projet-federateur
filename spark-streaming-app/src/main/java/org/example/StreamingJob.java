@@ -77,6 +77,7 @@ public class StreamingJob {
                 .foreachBatch(
                         (VoidFunction2<Dataset<NodePayload>, Long>) (dataset, batchId) -> {
                             System.out.println("\n[New Data - Batch: "+batchId+"]\n");
+                            dataset.show(); // show dataset after cleaning
                             // Processing
                             dataset = dataCleaningService.removeMissingValues(dataset);
                             dataset = dataCleaningService.removeNoiseAndIncorrectData(dataset);
