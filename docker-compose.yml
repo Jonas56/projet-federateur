@@ -88,7 +88,11 @@ services:
     depends_on:
       - kafka
       - mosquitto
-    
+  cnn-model:
+    build: ./tomato-leaf-disease-model
+    container_name: cnn-model
+    ports:
+      - "5000:5000"
 
 volumes:
   data: ~
