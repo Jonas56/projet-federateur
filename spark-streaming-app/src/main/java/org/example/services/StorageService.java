@@ -191,12 +191,13 @@ public class StorageService {
         Notification notification = Notification
                 .builder()
                 .setTitle(note.getSubject())
-                .setBody(note.getData().toString())
+                .setBody(note.getBody())
                 .build();
 
         Message message = Message
                 .builder()
                 .setTopic(topic)
+                .putAllData(note.getData())
                 .setNotification(notification)
                 .build();
 

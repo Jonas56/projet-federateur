@@ -14,10 +14,7 @@ import org.example.entities.Trio;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
+import java.util.*;
 
 public class DataValidationService {
     Map<Trio, Date> todaysNotifs;
@@ -37,23 +34,44 @@ public class DataValidationService {
         K
     }
 
+    private final Map<Sensor, String> sensorLabel = new HashMap<Sensor, String>() {{
+        put(Sensor.TempSoil, "Soil Temperature");
+        put(Sensor.TempAir, "Air Temperature");
+        put(Sensor.Humidity, "Humidity");
+        put(Sensor.Moisture, "Moisture");
+        put(Sensor.Ph, "pH");
+        put(Sensor.N, "Nitrogen(N)");
+        put(Sensor.P, "Phosphorus(P)");
+        put(Sensor.K, "Potassium(K)");
+    }};
+
     public DataValidationService() {
         this.todaysNotifs = new HashedMap();
     }
 
     public void triggerAlert(TypeOfAlert typeOfAlert, Sensor sensor, String nodeID, String productId, String value){
         Note note = new Note();
-        note.setSubject("some subject");
+        StringBuilder subject = new StringBuilder();
+        StringBuilder body = new StringBuilder();
+
+        if(typeOfAlert == TypeOfAlert.MIN) subject.append("Low ");
+        else subject.append("High ");
+        subject.append(sensorLabel.get(sensor));
+
+        body.append("Click on the notification to see more details");
+
         Map<String, String> data = new HashedMap();
         data.put("TypeOfAlert",typeOfAlert.name());
         data.put("Sensor",sensor.name());
         data.put("NodeID",nodeID);
         data.put("ProductID",productId);
         data.put("Value",value);
-
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         data.put("DateTime", formatter.format(date));
+
+        note.setSubject(subject.toString());
+        note.setBody(body.toString());
         note.setData(data);
         try {
             //TODO To be tested
